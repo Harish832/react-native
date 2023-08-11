@@ -1,51 +1,33 @@
 import { View, Text, StyleSheet, Button, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import {React,useState} from 'react'
 import MapView, { Circle, Marker, Polygon } from 'react-native-maps';
 import { ward51, ward52 } from '../../Engine/Data';
 import marker from '../../../assets/PointerMarker.png'
 import dog from '../../../assets/dog.png'
 import garbage from '../../../assets/garbage.png'
 import sewage from '../../../assets/sewage.png'
-
-
+import { useRouter } from 'expo-router';
 
 const latitudeDelta = 0.025
 const longitudeDelta = 0.025
 
-
-export default class Home extends React.Component {
-  state = {
-    region: {
-      latitudeDelta,
-      longitudeDelta,
-      latitude: 9.918103,
-      longitude: 78.118368
-    },
-    option: 0,
-    isOptionClicked: false
-  }
-
-  onRegionChange = region => {
-    this.setState({
-      region
-    })
-  }
-  onPress = (option,isOptionClicked) => {
-    this.setState(
-      option
-    )
-  }
-
-  render() {
-    const { region } = this.state;
-    const { option } = this.state;
-  
-    return (
-      <View >
+const Homey = (navigation) => {
+    const [data, setData] = useState({region: {
+        latitudeDelta,
+        longitudeDelta,
+        latitude: 9.918103,
+        longitude: 78.118368
+      },
+      option: 0,
+      isOptionClicked: false})
+      const router=useRouter();
+  return (
+    <View >
          <MapView style={styles.map}
-          initialRegion={region}
-          onRegionChangeComplete={this.onRegionChange}
+          initialRegion={data.region}
+          onRegionChangeComplete={(e)=>{setData(data.region.latitude=e.latitude )}}
         >
+
           <Polygon coordinates={ward51.coordinates} fillColor='rgba(255,20,147,0.1)' strokeColor='rgba(255,20,147,0.6)' ></Polygon>
           <Polygon coordinates={ward52.coordinates} fillColor='rgba(255,20,147,0.1)' strokeColor='rgba(255,20,147,0.6)'></Polygon>
         </MapView>
@@ -56,24 +38,23 @@ export default class Home extends React.Component {
         <View style={styles.raiseAComplaintBtnContainer}>
         <TouchableOpacity style={styles.raiseAComplaintBtn}
         onPress={()=>{
-          {this.state.option!==0?this.props.navigation.navigate('Login',{value:this.state}):null}
-          
+          router.push('/search/demo')
         }}>
-          <Text>{JSON.stringify(region.latitude,null)}</Text>
+          <Text>{JSON.stringify(data.region.latitude,null)}</Text>
         </TouchableOpacity>
         </View>
         <View style={styles.appButtonContainer}>
-          <TouchableOpacity style={styles.appButton} onPress={() => this.setState({ option: 1})}>
+          <TouchableOpacity style={styles.appButton} onPress={() => {setData(data.option=1)}}>
             <Image style={styles.image} source={dog}></Image>
             <Text>Stray Dogs</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.appButton} onPress={() => this.setState({ option: 2 })}>
+          <TouchableOpacity style={styles.appButton} onPress={() => {setData(data.option=2)}}>
           <Image style={styles.image} source={garbage}></Image>
             <Text>Garbage</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.appButton} onPress={() => this.setState({ option: 3 })}>
+          <TouchableOpacity style={styles.appButton} onPress={() => {setData(data.option=3)}}>
           <Image style={styles.image} source={sewage}></Image>
             <Text>Sewage</Text>
           </TouchableOpacity>
@@ -81,11 +62,8 @@ export default class Home extends React.Component {
         
 
       </View>
-    )
-  }
+  )
 }
-
-
 
 const styles = StyleSheet.create({
   map: {
@@ -155,3 +133,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 7,
   }
 });
+
+export default Homey
+
