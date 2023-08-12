@@ -6,7 +6,7 @@ import marker from '../../../assets/PointerMarker.png'
 import dog from '../../../assets/dog.png'
 import garbage from '../../../assets/garbage.png'
 import sewage from '../../../assets/sewage.png'
-
+// import Raycasting from '../../Engine/Raycasting';
 
 
 
@@ -21,6 +21,7 @@ export default class Home extends React.Component {
     },
     option: 0,
     isOptionClicked: false,
+    ward:"0"
   }
 
   onRegionChange = region => {
@@ -33,7 +34,7 @@ export default class Home extends React.Component {
       option
     )
   }
- 
+  
 
   render() {
     const { region } = this.state;
@@ -55,7 +56,21 @@ export default class Home extends React.Component {
         <View style={styles.raiseAComplaintBtnContainer}>
           <TouchableOpacity style={styles.raiseAComplaintBtn}
             onPress={() => {
-              { this.state.option !== 0 ? this.props.navigation.navigate('Complaint', { value: this.state}) : null }
+              var pointInPolygon = require('point-in-polygon');
+              var polygon = [[9.922135, 78.116752], [9.924756, 78.112028], [9.914308, 78.113326], [9.914139, 78.116418],[9.914815,78.121915],[9.920173,78.123831],[9.921459,78.125853],[9.922135,78.126889]];
+              var polygon1 = [[9.915475, 78.140007], [9.910237, 78.13564], [9.914308, 78.113326], [9.914139, 78.116418],[9.914815,78.121915],[9.920173,78.123831],[9.921459,78.125853]];
+              var istrue =pointInPolygon([this.state.region.latitude, this.state.region.longitude], polygon);
+              var istrue1 =pointInPolygon([this.state.region.latitude, this.state.region.longitude], polygon1);
+              if(istrue){
+                this.state.ward="51"
+              }
+              else if(istrue1){
+                this.state.ward="52"
+              }
+              else{
+                this.state.ward="No"
+              }
+              { this.state.option !== 0 ? this.props.navigation.navigate('Complaint', { value:this.state}) : null }
 
             }}>
             <Text>Raise a Complaint</Text>

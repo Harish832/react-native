@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView } from 
 import { USERDATA } from '../../Engine/User';
 
 
-const Complaint = ({ navigation, value }) => {
+const Complaint = ({ navigation, route }) => {
   const [Formvalues, setFormValues] = useState({
     Name: USERDATA.Name,
     PhoneNumber: USERDATA.PhoneNumber,
-    WardNo: null,
+    WardNo: route.params.value.ward,
     Zone: null,
     ComplaintDescription: null
   });
@@ -18,23 +18,23 @@ const Complaint = ({ navigation, value }) => {
         <ScrollView>
           <Text style={styles.Subtitles}>Name</Text>
           <TextInput
-            editable cursorColor='grey' numberOfLines={4} maxLength={40} value={value} defaultValue={Formvalues.Name} style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: 20, height: 50, position: 'relative' }}
+            editable cursorColor='grey' numberOfLines={4} maxLength={40} defaultValue={Formvalues.Name} style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: 20, height: 50, position: 'relative' }}
           />
           <Text style={styles.Subtitles}>Complaint Type</Text>
           <TextInput
-            editable cursorColor='grey' numberOfLines={4} maxLength={40} value={value} defaultValue={Formvalues.Name} style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: 20, height: 50, position: 'relative' }}
+            editable cursorColor='grey' numberOfLines={4} maxLength={40} defaultValue={Formvalues.Name} style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: 20, height: 50, position: 'relative' }}
           />
           <Text style={styles.Subtitles}>Ward No</Text>
           <TextInput
-            editable cursorColor='grey' numberOfLines={4} maxLength={40} value={value} defaultValue={Formvalues.Name} style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: 20, height: 50, position: 'relative' }}
+            editable cursorColor='grey' numberOfLines={4} maxLength={40} defaultValue={Formvalues.WardNo} style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: 20, height: 50, position: 'relative' }}
           />
           <Text style={styles.Subtitles}>Zone</Text>
           <TextInput
-            editable cursorColor='grey' numberOfLines={4} maxLength={40} value={value} defaultValue={Formvalues.Name} style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: 20, height: 50, position: 'relative' }}
+            editable cursorColor='grey' numberOfLines={4} maxLength={40} defaultValue={Formvalues.Name} style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: 20, height: 50, position: 'relative' }}
           />
           <Text style={styles.Subtitles}>Complaint Description</Text>
           <TextInput
-            editable cursorColor='grey' multiline maxLength={40} value={value} defaultValue={Formvalues.Name} style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: 20, height: 170, position: 'relative' }}
+            editable cursorColor='grey' multiline maxLength={40} defaultValue={Formvalues.Name} style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.1)', margin: 20, height: 170, position: 'relative' }}
           />
         </ScrollView>
 
